@@ -58,7 +58,7 @@ function bindWindow(name, callback) {
 
 function make(collection, event, callback, func) {
 	collection = (0, _collection2.default)(collection);
-	if (collection && collection.length) {
+	if (collection.length) {
 		event = getName(event);
 		if (event.length > 1) {
 			bindEvents(collection, event, callback, func);
@@ -99,7 +99,7 @@ var Evn = {
 		var remove = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
 		element = (0, _collection2.default)(element);
-		if (element && element.length) {
+		if (element.length) {
 			bindEvent(element, 'mouseenter', enter, adding);
 			bindEvent(element, 'mouseleave', leave, adding);
 			remove && remove(function () {

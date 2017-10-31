@@ -6,25 +6,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _isNode = require("./is-node");
+var _evn = require("./evn");
 
-var _isNode2 = _interopRequireDefault(_isNode);
-
-var _event = require("./event");
-
-var _event2 = _interopRequireDefault(_event);
+var _evn2 = _interopRequireDefault(_evn);
 
 var _collection = require("./collection");
 
 var _collection2 = _interopRequireDefault(_collection);
 
-var _item = require("./item");
-
-var _item2 = _interopRequireDefault(_item);
-
 var _style = require("./style");
 
 var _style2 = _interopRequireDefault(_style);
+
+var _rvjsTools = require("rvjs-tools");
+
+var _rvjsTools2 = _interopRequireDefault(_rvjsTools);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36,13 +32,13 @@ var cssNumber = {};
 });
 
 function appendChild(elm, child) {
-	if (!(0, _isNode2.default)(child)) {
+	if (!_rvjsTools2.default.isHtmlNodeElement(child)) {
 		var tof = typeof child === "undefined" ? "undefined" : _typeof(child);
 		if (tof === 'string') {
 			child = document.createTextNode(child);
 		} else if (tof === 'function') {
 			child = child();
-			if (!(0, _isNode2.default)(child)) {
+			if (!_rvjsTools2.default.isHtmlNodeElement(child)) {
 				return;
 			}
 		} else if (tof === 'object' && tof !== null) {
@@ -50,6 +46,16 @@ function appendChild(elm, child) {
 		} else return;
 	}
 	elm.appendChild(child);
+}
+
+/**
+ * @return {string}
+ */
+function getString(text) {
+	if (typeof text === 'function') {
+		text = text();
+	}
+	return String(text);
 }
 
 var Element = {
@@ -80,9 +86,6 @@ var Element = {
 	},
 	byName: function byName(name) {
 		return document.getElementsByName(name);
-	},
-	item: function item(element) {
-		return (0, _item2.default)(typeof element == 'string' ? Element.byId(element) : element);
 	},
 	create: function create(props) {
 		props = props || {};
@@ -137,7 +140,7 @@ var Element = {
 			keys.forEach(function (name) {
 				value = data[name];
 				if (value !== null && value !== undefined) {
-					if ((typeof value === "undefined" ? "undefined" : _typeof(value)) == "object") {
+					if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
 						try {
 							value = JSON.stringify(value);
 						} catch (e) {
@@ -152,7 +155,7 @@ var Element = {
 		if (events) {
 			keys = Object.keys(events);
 			keys.forEach(function (name) {
-				_event2.default.add(elm, name, events[name]);
+				_evn2.default.add(elm, name, events[name]);
 			});
 		}
 
@@ -170,10 +173,10 @@ var Element = {
 		}
 
 		if (props.text) {
-			elm.appendChild(document.createTextNode(String(props.text)));
+			elm.appendChild(document.createTextNode(getString(props.text)));
 		} else if (props.html) {
 			try {
-				elm.innerHTML = String(props.html);
+				elm.innerHTML = getString(props.html);
 			} catch (e) {}
 		} else if (props.children && Array.isArray(props.children)) {
 			props.children.forEach(function (child) {
@@ -198,7 +201,7 @@ var Element = {
 			}
 
 			if (elements.length) {
-				if ((typeof name === "undefined" ? "undefined" : _typeof(name)) == 'object' && arguments.length < 3) {
+				if ((typeof name === "undefined" ? "undefined" : _typeof(name)) === 'object' && arguments.length < 3) {
 					for (var n = 0, keys = Object.keys(name), prop, keysLength = keys.length, length = elements.length; n < keysLength; n++) {
 						prop = keys[n];
 						for (i = 0; i < length; i++) {
@@ -221,27 +224,6 @@ var Element = {
 		} else {
 			return [];
 		}
-	},
-	forEach: function forEach(element, callback) {
-		if (element = (0, _collection2.default)(element) && element.length) {
-			Array.prototype.forEach.call(element, callback);
-			return element;
-		} else {
-			return [];
-		}
-	},
-	empty: function empty(element) {
-		if (element.firstChild) {
-			try {
-				element.innerHTML = '';
-			} catch (e) {
-				while (element.firstChild) {
-					element.removeChild(element.firstChild);
-				}
-			}
-		}
-
-		return element;
 	}
 };
 

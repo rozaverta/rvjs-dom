@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.StyleSheets = exports.Style = exports.Ready = exports.Page = exports.Offset = exports.IsNode = exports.Event = exports.Element = exports.Collection = exports.ClassName = undefined;
+exports.StyleSheets = exports.Style = exports.Ready = exports.Page = exports.Offset = exports.Evn = exports.Element = exports.Collection = exports.ClassName = undefined;
 
 var _className = require("./class-name");
 
@@ -29,9 +29,9 @@ var _element = require("./element");
 
 var _element2 = _interopRequireDefault(_element);
 
-var _event = require("./event");
+var _evn = require("./evn");
 
-var _event2 = _interopRequireDefault(_event);
+var _evn2 = _interopRequireDefault(_evn);
 
 var _styleSheets = require("./style-sheets");
 
@@ -41,17 +41,12 @@ var _style = require("./style");
 
 var _style2 = _interopRequireDefault(_style);
 
-var _isNode = require("./is-node");
-
-var _isNode2 = _interopRequireDefault(_isNode);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.ClassName = _className2.default;
 exports.Collection = _collection2.default;
 exports.Element = _element2.default;
-exports.Event = _event2.default;
-exports.IsNode = _isNode2.default;
+exports.Evn = _evn2.default;
 exports.Offset = _offset2.default;
 exports.Page = _page2.default;
 exports.Ready = _ready2.default;

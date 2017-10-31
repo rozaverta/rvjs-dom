@@ -113,7 +113,7 @@ function map(callback, lst, name) {
 	var ignoreName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
 	lst = (0, _collection2.default)(lst, false);
-	if (lst) {
+	if (lst.length) {
 		name = getName(name);
 		if (name || ignoreName) {
 			name = name.split(regSplit);
@@ -126,7 +126,7 @@ function map(callback, lst, name) {
 
 function mapResult(callback, lst, name, result) {
 	lst = (0, _collection2.default)(lst, false);
-	if (lst) {
+	if (lst.length) {
 		name = getName(name);
 		if (name) {
 			name = name.split(regSplit);
