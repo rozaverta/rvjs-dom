@@ -62,7 +62,7 @@ function removeClass(e) {
 // for remap
 
 function CollectionSet(e, name) {
-	e.className = name.length == 1 ? name[0] : name.join(" ");
+	e.className = name.length === 1 ? name[0] : name.join(" ");
 }
 
 function CollectionAdd(e, name) {
@@ -112,7 +112,7 @@ function CollectionContains(e, name) {
 function map(callback, lst, name) {
 	var ignoreName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
-	lst = (0, _collection2.default)(lst, false);
+	lst = _collection2.default.make(lst, false);
 	if (lst.length) {
 		name = getName(name);
 		if (name || ignoreName) {
@@ -125,13 +125,13 @@ function map(callback, lst, name) {
 }
 
 function mapResult(callback, lst, name, result) {
-	lst = (0, _collection2.default)(lst, false);
+	lst = _collection2.default.make(lst, false);
 	if (lst.length) {
 		name = getName(name);
 		if (name) {
 			name = name.split(regSplit);
 			for (var i = 0, length = lst.length; i < length; i++) {
-				if (callback(lst[i], name) != result) {
+				if (callback(lst[i], name) !== result) {
 					return false;
 				}
 			}

@@ -57,7 +57,7 @@ function bindWindow(name, callback) {
 }
 
 function make(collection, event, callback, func) {
-	collection = (0, _collection2.default)(collection);
+	collection = _collection2.default.make(collection);
 	if (collection.length) {
 		event = getName(event);
 		if (event.length > 1) {
@@ -98,7 +98,7 @@ var Evn = {
 	hover: function hover(element, enter, leave) {
 		var remove = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
-		element = (0, _collection2.default)(element);
+		element = _collection2.default.make(element);
 		if (element.length) {
 			bindEvent(element, 'mouseenter', enter, adding);
 			bindEvent(element, 'mouseleave', leave, adding);

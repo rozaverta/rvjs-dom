@@ -189,7 +189,7 @@ var Element = {
 		return elm;
 	},
 	css: function css(element, name, value) {
-		if (element = (0, _collection2.default)(element) && element.length) {
+		if (element = _collection2.default.make(element) && element.length) {
 			var i = void 0,
 			    elem = void 0,
 			    elements = [];
