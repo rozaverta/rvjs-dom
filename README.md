@@ -157,10 +157,14 @@ Add and remove default events for html nodes
 	
 ## Dom.Offset
 
-> `Function() : {Object}` \
-Get offset of html node \
-Return object with properties: 
-- width: 0, height: 0, top: 0, left: 0
+- Dom.offset
+	> `Function({HtmlElement} element[, {Boolean} fixed = false]) : {Object}` \
+	Get offset of html node \
+	Return object with properties: 
+	- `{Number} width` - HtmlElement width content
+	- `{Number} height` - HtmlElement height content
+	- `{Number} top` - HtmlElement offset top of viewport 
+	- `{Number} left` - HtmlElement offset left of viewport 
 
 ## Dom.Page
 
