@@ -157,7 +157,7 @@ Add and remove default events for html nodes
 	
 ## Dom.Offset
 
-- Dom.offset
+- Offset
 	> `Function({HtmlElement} element[, {Boolean} fixed = false]) : {Object}` \
 	Get offset of html node \
 	Return object with properties: 
