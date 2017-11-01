@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (element) {
 	var fixed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-	if (element && element.nodeType == 1) {
+	if (element && element.nodeType === 1) {
 		return offset(element, fixed);
 	} else {
 		return {

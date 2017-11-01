@@ -98,7 +98,7 @@ var Element = {
 
 		var classes = [];
 		var name = (props.name || 'div').replace(regClassId, function (m, a, b) {
-			if (a == '#') props.id = b;else classes.push(b);return '';
+			if (a === '#') props.id = b;else classes.push(b);return '';
 		});
 		var elm = props.nameSpace ? document.createElementNS(props.nameSpace, name) : document.createElement(name);
 		var keys = [],
@@ -189,7 +189,8 @@ var Element = {
 		return elm;
 	},
 	css: function css(element, name, value) {
-		if (element = _collection2.default.make(element) && element.length) {
+		element = _collection2.default.make(element);
+		if (element.length) {
 			var i = void 0,
 			    elem = void 0,
 			    elements = [];
@@ -219,11 +220,8 @@ var Element = {
 					}
 				}
 			}
-
-			return element;
-		} else {
-			return [];
 		}
+		return element;
 	}
 };
 

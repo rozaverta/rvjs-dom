@@ -47,7 +47,7 @@ function bindEvents(collection, events, callback, func) {
 }
 
 function bindWindow(name, callback) {
-	if (bind(window, name, callback, adding)) {
+	if (typeof window !== 'undefined' && bind(window, name, callback, adding)) {
 		callback && callback(function () {
 			bind(window, name, callback, removing);
 		});
