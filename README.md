@@ -11,27 +11,27 @@ import * as Dom from "rvjs-dom";
 > `Object` \
 Class name html nodes manipulations
 
-- ClassName.set \
+- ClassName.set
 	>`Function( {String | HTMLCollection | Dom.Collection} nodes, {String} classes ) : {Dom.ClassName}` \
 	Set class or classes for nodes
-- ClassName.add \
+- ClassName.add
 	>`Function( {String | HTMLCollection | Dom.Collection} nodes, {String} classes) : {Dom.ClassName}` \
 	Add class or classes for nodes
-- ClassName.remove \
+- ClassName.remove
 	>`Function({String | HTMLCollection | Dom.Collection} nodes, {String} classes) : {Dom.ClassName}` \
 	Remove class or classes for nodes
-- ClassName.toggle \
+- ClassName.toggle
 	>`Function({String | HTMLCollection | Dom.Collection} nodes, {String} classes) : {Dom.ClassName}` \
 	Toggle class or classes for nodes
-- ClassName.has \
+- ClassName.has
 	>`Function({String | HTMLCollection | Dom.Collection} nodes, {String} classes[, {Function} callback]) : {Boolean}` \
 	Check class or classes assigned for nodes \
 	If classes is found and $callback arguments is function then $callback function will be called
-- ClassName.not \
+- ClassName.not
 	>`Function({String | HTMLCollection | Dom.Collection} nodes, {String} classes[, {Function} callback]) : {Boolean}` \
 	Check class or classes is not assigned for nodes \
 	If classes is not found and $callback arguments is function then $callback function will be called
-- ClassName.dispatch \
+- ClassName.dispatch
 	>`Function({String | HTMLCollection | Dom.Collection} nodes, {String} classes, {Function} callback) : {Dom.ClassName | Boolean}` \
 	Short method for all `Dom.ClassName` methods: \
 	`: class-name` - set \
@@ -86,27 +86,27 @@ let collection_5 = Collection.make(collection_1);
 > `Object` \
 Default html nodes manipulations
 
-- Element.byId \
+- Element.byId
 	>`Function({String} name) : {HtmlElement | null}` \
 	Similarly to calling the `document.getElementById(name)` function
-- Element.byQueryOne \
+- Element.byQueryOne
 	>`Function({String} name[, {HtmlElement} element = null])` \
 	Similarly to calling the `HtmlElement.querySelector(name)` function \
 	If the element is null it is used `document` object
-- Element.byQuery \
+- Element.byQuery
 	>`Function({String} name[, {HtmlElement} element = null])` \
 	Similarly to calling the `HtmlElement.querySelectorAll(name)` function \
 	If the element is null it is used `document` object
-- Element.byClassName \
+- Element.byClassName
 	>`Function({String} name)` \
 	Similarly to calling the `document.getElementsByClassName(name)` function
-- Element.byTag \
+- Element.byTag
 	>`Function({String} name)` \
 	Similarly to calling the `document.getElementsByTagName(name)` function
-- Element.byName \
+- Element.byName
 	>`Function({String} name)` \
 	Similarly to calling the `document.getElementsByName(name)` function
-- Element.create \
+- Element.create
 	>`Function({Object} properties) : {HtmlElement}`
 	Create HtmlElement \
 	Properties:
@@ -124,10 +124,10 @@ Default html nodes manipulations
 	- `{String | Function} html` - set html text to the created HtmlElement (used property `innerHTML`)
 	- `{Array} children` - children elements
 	- `{*} child` - child element
-- Element.css\
+- Element.css
 	>`Function({*} nodes, {String} name, {String} value) : {Dom.Collection}` \
 	Assign style property `name` equal to `value` for all `nodes`
-- Element.css\
+- Element.css
 	>`Function({*} nodes, {Object} styles) : {Dom.Collection}`\
     Assign multiply `styles` properties
 
@@ -136,19 +136,19 @@ Default html nodes manipulations
 > `Object` \
 Add and remove default events for html nodes
 
-- Evn.add \
+- Evn.add
 	>`Function({*} nodes, {String} event, {Function} callback)` \
 	Add `event` for nodes
-- Evn.remove \
+- Evn.remove
 	>`Function({*} nodes, {String} event, {Function} callback)` \
 	Remove `event` for nodes
-- Evn.resize \
+- Evn.resize
 	>`Function({Function} callback[, {Function} removeCallback])` \
 	Add resize event for window object
-- Evn.scroll \
+- Evn.scroll
 	>`Function({Function} callback[, {Function} removeCallback])` \
 	Add scroll event for window object
-- Evn.on \
+- Evn.on
 	>`Function({String} event, {Function} callback[, {Function} removeCallback])` \
 	Add `event` for window object
 - Evn.hover
@@ -202,9 +202,9 @@ Style( Element.byId("app"), "border", "1px solid var(--red)" );
 Add new style sheet rules for page \
 Return Void
 
-- Dom.StyleSheets \
+- Dom.StyleSheets
 	>`Function( {String} selector, {String} rules )`
-- Dom.StyleSheets \
+- Dom.StyleSheets
 	> `Function( {Object} rules ` \
 	Add multiply rules
 
