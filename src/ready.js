@@ -50,7 +50,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
 		var top = false;
 
 		try {
-			top = window.frameElement == null && document.documentElement;
+			top = window.frameElement === null && document.documentElement;
 		} catch (e) {}
 
 		if (top && top.doScroll) {
@@ -71,5 +71,5 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
 }
 
 function Ready(callback) {
-	if (docIsReady) setTimeout(callback, 0);else docCall.push(callback);
+	if (docIsReady) setTimeout(callback, 0);else if (callback.indexOf(callback) < 0) docCall.push(callback);
 }

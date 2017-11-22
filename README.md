@@ -209,7 +209,7 @@ Return Void
 - Dom.StyleSheets
 	>`Function( {String} selector, {String} rules )`
 - Dom.StyleSheets
-	> `Function( {Object} rules ` \
+	> `Function( {Object} rules )` \
 	Add multiply rules
 
 ```javascript

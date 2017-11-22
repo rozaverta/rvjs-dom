@@ -1,12 +1,16 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _collection = require('./collection');
+var _collection = require("./collection");
 
 var _collection2 = _interopRequireDefault(_collection);
+
+var _ready = require("./ready");
+
+var _ready2 = _interopRequireDefault(_ready);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -110,7 +114,10 @@ var Evn = {
 			remove(noop);
 		}
 		return Evn;
-	}
+	},
+
+
+	ready: _ready2.default
 };
 
 exports.default = Evn;
