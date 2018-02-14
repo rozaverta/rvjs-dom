@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _ready = require("./ready");
+var _evn = require("./evn");
 
-var _ready2 = _interopRequireDefault(_ready);
+var _evn2 = _interopRequireDefault(_evn);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34,7 +34,7 @@ if (typeof window !== "undefined" && window.document && window.navigator) {
 	if (GetBody()) {
 		Body = GetBody();
 	} else {
-		(0, _ready2.default)(function () {
+		_evn2.default.ready(function () {
 			Body = GetBody();
 		});
 	}
