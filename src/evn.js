@@ -1,24 +1,117 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _collection = require("./collection");
+var _collection = require('./collection');
 
 var _collection2 = _interopRequireDefault(_collection);
-
-var _ready = require("./ready");
-
-var _ready2 = _interopRequireDefault(_ready);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var adding = 'addEventListener',
     removing = 'removeEventListener';
 var reg = /\s+/g;
+var isWin = typeof window !== 'undefined' && 'setTimeout' in window;
+
+// -- READY DOM
+
+var docIsReady = false;
+var docCall = [];
+
+function docLoad() {
+	if (!docIsReady) {
+		detach();
+		docIsReady = true;
+	}
+
+	for (var i = 0, len = docCall.length; i < len; i++) {
+		try {
+			docCall[i]();
+		} catch (e) {
+			console.log("Fatal ready callback error", e);
+		}
+	}
+
+	docCall = [];
+}
+
+function detach() {
+	if (document[adding]) {
+		document[removing]("DOMContentLoaded", docLoad);
+		window[removing]("load", docLoad);
+	} else {
+		document.detachEvent("onreadystatechange", docLoad);
+		window.detachEvent("onload", docLoad);
+	}
+}
+
+if (isWin && typeof document !== "undefined") {
+	if (document.readyState === "complete" || document.readyState !== "loading" && !document.documentElement.doScroll) {
+		setTimeout(docLoad, 0);
+	} else if (document[adding]) {
+		document[adding]("DOMContentLoaded", docLoad);
+		window[adding]("load", docLoad);
+	} else {
+		document.attachEvent("onreadystatechange", docLoad);
+		window.attachEvent("onload", docLoad);
+
+		// If IE and not a frame
+		// continually check to see if the document is ready
+		var top = false;
+
+		try {
+			top = window.frameElement === null && document.documentElement;
+		} catch (e) {}
+
+		if (top && top.doScroll) {
+			(function doScrollCheck() {
+				if (!docIsReady) {
+
+					try {
+						top.doScroll("left");
+					} catch (e) {
+						return window.setTimeout(doScrollCheck, 50);
+					}
+
+					docLoad();
+				}
+			})();
+		}
+	}
+}
+
+// -- /READY
+
+var support = {
+	touch: isWin && 'ontouchstart' in window,
+	orientationChange: isWin && 'orientationchange' in window,
+	passive: false
+};
+
+try {
+	var opts = Object.defineProperty({}, 'passive', {
+		get: function get() {
+			support.passive = true;
+		}
+	});
+	window[adding]("testPassive", null, opts);
+	window[removing]("testPassive", null, opts);
+} catch (e) {}
+
+// -- EVENTS CALLBACK
 
 function noop() {}
+
+function tap(items, func) {
+	for (var i = 0, length = items.length; i < length; i++) {
+		if (func(items[i]) === false) {
+			return false;
+		}
+	}
+	return true;
+}
 
 function getName(name) {
 	return Array.isArray(name) ? name : String(name).split(reg);
@@ -34,29 +127,30 @@ function bind(element, event, callback, func) {
 }
 
 function bindEvent(collection, event, callback, func) {
-	for (var i = 0, length = collection.length; i < length; i++) {
-		bind(collection[i], event, callback, func);
-	}
+	tap(collection, function (element) {
+		return bind(element, event, callback, func);
+	});
 }
 
 function bindEvents(collection, events, callback, func) {
-	for (var i = 0, j, node, ln = events.length, length = collection.length; i < length; i++) {
-		node = collection[i];
-		if (node[func]) {
-			for (j = 0; j < ln; j++) {
-				node[func](events[j], callback, false);
-			}
-		}
-	}
+	tap(collection, function (element) {
+		return element[func] && tap(events, function (event) {
+			element[func](event, callback, false);
+		});
+	});
 }
 
-function bindWindow(name, callback) {
-	if (typeof window !== 'undefined' && bind(window, name, callback, adding)) {
-		callback && callback(function () {
-			bind(window, name, callback, removing);
+function bindWindow(name, callback, remove_callback) {
+	if (isWin && tap(name, function (n) {
+		return bind(window, n, callback, adding);
+	})) {
+		remove_callback && remove_callback(function () {
+			tap(name, function (n) {
+				return bind(window, n, callback, removing);
+			});
 		});
-	} else if (callback) {
-		callback(noop);
+	} else if (remove_callback) {
+		remove_callback(noop);
 	}
 }
 
@@ -73,6 +167,18 @@ function make(collection, event, callback, func) {
 }
 
 var Evn = {
+
+	support: support,
+
+	native: function native(add, element, name, callback) {
+		var capture = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+
+		var func = add === true || add === 'add' ? adding : removing;
+		if (element && typeof callback === 'function' && func in element) {
+			element[func](name, callback, capture);
+		}
+		return Evn;
+	},
 	add: function add(element, name, callback) {
 		make(element, name, callback, adding);
 		return Evn;
@@ -84,19 +190,19 @@ var Evn = {
 	resize: function resize(callback) {
 		var remove = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-		bindWindow('resize', callback, remove);
+		bindWindow(support.orientationChange ? ['resize', 'orientationchange'] : ['resize'], callback, remove);
 		return Evn;
 	},
 	scroll: function scroll(callback) {
 		var remove = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-		bindWindow('scroll', callback, remove);
+		bindWindow(['scroll'], callback, remove);
 		return Evn;
 	},
 	on: function on(name, callback) {
 		var remove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
-		bindWindow(name, callback, remove);
+		bindWindow(getName(name), callback, remove);
 		return Evn;
 	},
 	hover: function hover(element, enter, leave) {
@@ -115,9 +221,12 @@ var Evn = {
 		}
 		return Evn;
 	},
-
-
-	ready: _ready2.default
+	ready: function ready(callback) {
+		if (typeof callback === 'function') {
+			if (docIsReady) setTimeout(callback, 0);else if (docCall.indexOf(callback) < 0) docCall.push(callback);
+		}
+		return Evn;
+	}
 };
 
 exports.default = Evn;

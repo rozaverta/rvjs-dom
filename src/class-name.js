@@ -154,6 +154,10 @@ var ClassName = {
 		map(CollectionRemove, e, name);
 		return ClassName;
 	},
+	pick: function pick(dir, e, name) {
+		map(dir ? CollectionAdd : CollectionRemove, e, name);
+		return ClassName;
+	},
 	toggle: function toggle(e, name) {
 		map(CollectionToggle, e, name);
 		return ClassName;

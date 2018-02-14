@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.StyleSheets = exports.Style = exports.Ready = exports.Page = exports.Offset = exports.Evn = exports.Element = exports.Collection = exports.ClassName = undefined;
+exports.StyleSheets = exports.Style = exports.Page = exports.Offset = exports.Evn = exports.Element = exports.Collection = exports.ClassName = undefined;
 
 var _className = require("./class-name");
 
@@ -20,10 +20,6 @@ var _offset2 = _interopRequireDefault(_offset);
 var _page = require("./page");
 
 var _page2 = _interopRequireDefault(_page);
-
-var _ready = require("./ready");
-
-var _ready2 = _interopRequireDefault(_ready);
 
 var _element = require("./element");
 
@@ -49,6 +45,5 @@ exports.Element = _element2.default;
 exports.Evn = _evn2.default;
 exports.Offset = _offset2.default;
 exports.Page = _page2.default;
-exports.Ready = _ready2.default;
 exports.Style = _style2.default;
 exports.StyleSheets = _styleSheets2.default;

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _rvjsTools = require('rvjs-tools');
+var _rvjsTools = require("rvjs-tools");
 
 var _rvjsTools2 = _interopRequireDefault(_rvjsTools);
 
@@ -20,6 +20,18 @@ function Copy(collection, htmlCollection) {
 	for (var i = 0, length = htmlCollection.length; i < length; i++) {
 		collection.add(htmlCollection[i]);
 	}
+}
+
+/**
+ * @return {boolean}
+ */
+function FoundCollection(element) {
+	if (typeof element.selector !== "string") {
+		return false;
+	}
+
+	var doc = element.document || {};
+	return doc.nodeType === 1 || doc.nodeType === 9;
 }
 
 function Fill(collection, element, isWindow) {
@@ -37,6 +49,8 @@ function Fill(collection, element, isWindow) {
 				Fill(collection, element[i], isWindow, level + 1);
 			}
 		}
+	} else if (type === 'object' && FoundCollection(element)) {
+		Copy(collection, element.document.querySelectorAll(element.selector));
 	} else if (type === "string") {
 		Copy(collection, document.querySelectorAll(element));
 	}
@@ -80,7 +94,7 @@ var Collection = function () {
 	}
 
 	_createClass(Collection, [{
-		key: 'fill',
+		key: "fill",
 		value: function fill(element) {
 			var isWindow = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
@@ -88,7 +102,7 @@ var Collection = function () {
 			return this;
 		}
 	}, {
-		key: 'forEach',
+		key: "forEach",
 		value: function forEach(callback) {
 			for (var i = 0, length = this.length; i < length; i++) {
 				callback(this[i], i);
@@ -96,7 +110,7 @@ var Collection = function () {
 			return this;
 		}
 	}, {
-		key: 'map',
+		key: "map",
 		value: function map(callback) {
 			var remap = new Collection();
 			for (var i = 0, length = this.length, element; i < length; i++) {
@@ -117,7 +131,7 @@ var Collection = function () {
    */
 
 	}], [{
-		key: 'make',
+		key: "make",
 		value: function make(element, isWindow) {
 			if (arguments.length > 0) {
 				if (element instanceof Collection) {

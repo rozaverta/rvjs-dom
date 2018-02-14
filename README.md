@@ -17,6 +17,9 @@ Class name html nodes manipulations
 - ClassName.add
 	>`Function( {String | HTMLCollection | Dom.Collection} nodes, {String} classes) : {Dom.ClassName}` \
 	Add class or classes for nodes
+- ClassName.pick
+	>`Function( {Boolean} add, ...args )` \
+	Add or Remove class classes for nodes, the first argument indicates a function further arguments are passed to the function
 - ClassName.remove
 	>`Function({String | HTMLCollection | Dom.Collection} nodes, {String} classes) : {Dom.ClassName}` \
 	Remove class or classes for nodes
@@ -136,6 +139,9 @@ Default html nodes manipulations
 > `Object` \
 Add and remove default events for html nodes
 
+- Evn.support
+	>`Object {}` \
+	Mixed support values
 - Evn.add
 	>`Function({*} nodes, {String} event, {Function} callback)` \
 	Add `event` for nodes
@@ -154,12 +160,19 @@ Add and remove default events for html nodes
 - Evn.hover
 	>`Function({*} nodes, {Function} enterCallback, {Function} leaveCallback[, {Function} removeCallback])` \
 	Add mouseenter and mouseleave events for nodes
+- Evn.ready
+	>`Function({Function} eventCallback)` \
+	Add callback for DOMContentLoaded event
+- Evn.native
+	>`Function({Boolean | String} add, {HtmlElement} node, {String} event, {Function} callback[, {*} useCapture=false])` \
+	Use native event listener for fast
 	
 ## Dom.Offset
 
 - Offset
 	> `Function({HtmlElement} element[, {Boolean} fixed = false]) : {Object}` \
 	Get offset of html node \
+	Use `fixed = "auto"` for detect fixed element \
 	Return object with properties: 
 	- `{Number} width` - HtmlElement width content
 	- `{Number} height` - HtmlElement height content
@@ -178,11 +191,6 @@ Page page (browser window) offset properties: top, left, width, height, etc.
 - `{Number} viewportWidth` - document viewport width
 - `{Number} viewportHeight` - document viewport height
 - `{Function} all()` - get all properties as `Object`
-
-## Dom.Ready
-
-> `Function` \
-Add callback for DOMContentLoaded event
 
 ## Dom.Style
 
