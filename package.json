@@ -1,6 +1,6 @@
 {
   "name": "rvjs-dom",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "HTML Dom basic manipulations",
   "main": "src/index.js",
   "scripts": {

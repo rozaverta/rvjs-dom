@@ -31,7 +31,7 @@ var cssNumber = {};
 	cssNumber[n] = true;
 });
 
-function appendChild(elm, child) {
+function appendChild(elm, child, refs) {
 	if (!_rvjsTools2.default.isHtmlNodeElement(child)) {
 		var tof = typeof child === "undefined" ? "undefined" : _typeof(child);
 		if (tof === 'string') {
@@ -41,8 +41,8 @@ function appendChild(elm, child) {
 			if (!_rvjsTools2.default.isHtmlNodeElement(child)) {
 				return;
 			}
-		} else if (tof === 'object' && tof !== null) {
-			child = Element.create(child);
+		} else if (tof === 'object' && child !== null) {
+			child = Element.create(child, refs);
 		} else return;
 	}
 	elm.appendChild(child);
@@ -88,6 +88,8 @@ var Element = {
 		return document.getElementsByName(name);
 	},
 	create: function create(props) {
+		var refs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
 		props = props || {};
 
 		if (typeof props === "string") {
@@ -107,6 +109,7 @@ var Element = {
 		var properties = props.props || 0;
 		var events = props.events || 0;
 		var data = props.data || 0;
+		var ref = props.ref || 0;
 
 		// class name
 		if (props.className) {
@@ -172,6 +175,15 @@ var Element = {
 			}
 		}
 
+		if (ref) {
+			var tof = typeof ref === "undefined" ? "undefined" : _typeof(ref);
+			if (tof === 'string') {
+				refs[ref] = elm;
+			} else if (tof === 'function') {
+				ref(elm, refs);
+			}
+		}
+
 		if (props.text) {
 			elm.appendChild(document.createTextNode(getString(props.text)));
 		} else if (props.html) {
@@ -180,13 +192,25 @@ var Element = {
 			} catch (e) {}
 		} else if (props.children && Array.isArray(props.children)) {
 			props.children.forEach(function (child) {
-				appendChild(elm, child);
+				appendChild(elm, child, refs);
 			});
 		} else if (props.child) {
-			appendChild(elm, props.child);
+			appendChild(elm, props.child, refs);
 		}
 
 		return elm;
+	},
+	empty: function empty(element) {
+		var current = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+		if (_rvjsTools2.default.isHtmlNodeElement(element)) {
+			while (element.firstChild) {
+				element.removeChild(element.firstChild);
+			}
+			if (current && element.parentNode) {
+				element.parentNode.removeChild(element);
+			}
+		}
 	},
 	css: function css(element, name, value) {
 		element = _collection2.default.make(element);
