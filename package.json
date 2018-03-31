@@ -1,6 +1,6 @@
 {
   "name": "rvjs-dom",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "HTML Dom basic manipulations",
   "main": "src/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "dom"
   ],
   "dependencies": {
-    "rvjs-tools": "*"
+    "rvjs-tools": "^1.0.5"
   },
   "author": "GoshaV [Maniako]",
   "license": "MIT"

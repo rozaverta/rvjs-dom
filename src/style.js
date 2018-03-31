@@ -14,7 +14,7 @@ var cssProp = { "float": "cssFloat" };
 
 var regExpCustomProp = /^--/;
 var emptyStyle = typeof document !== 'undefined' ? document.createElement("div").style : {};
-var cssPrefixes = ["Webkit", "Moz", "ms"];
+var cssPrefixes = ["Webkit", "Moz", "Khtml", "ms"];
 
 function styleName(name) {
 	var ret = cssProp[name];
@@ -46,12 +46,13 @@ function Style(element, name, value) {
 	if (regExpCustomProp.test(name)) {
 		element.style.setProperty(name, value);
 	} else {
+		name = styleName(name);
 		if (!value && value !== 0) {
 			value = '';
 		} else {
 			value += typeof value === "number" && !cssNumber[name] ? 'px' : '';
 		}
 
-		element.style[styleName(name)] = value;
+		element.style[name] = value;
 	}
 };
